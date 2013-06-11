@@ -1,0 +1,112 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/jquery-jvectormap-1.2.2.css" rel="stylesheet" />
+</head>
+<body>
+    <h2 style="text-align:center;margin:1em;">Visit <a href="http://techbrij.com">techbrij.com</a> to read tutorial of this.</h2>
+    <section class="featured">
+        <div class="map" style="width: 800px; height: 600px;margin:0 auto"></div>
+    </section>
+   
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    <script src="~/Scripts/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="~/Scripts/jquery-jvectormap-us-aea-en.js"></script>
+    <script>
+        $(function () {
+            var data = {};
+            $.ajax({ url: 'api/data', type: 'GET', async: false, dataType: 'json' }).done(function (result) {
+                data = result;
+            })
+
+          var statesValues = Array.prototype.concat.apply([], jvm.values(data.states)),
+            metroPopValues = Array.prototype.concat.apply([], jvm.values(data.metro.population)),
+            metroUnemplValues = Array.prototype.concat.apply([], jvm.values(data.metro.unemployment));
+
+            $('.map').vectorMap({
+                map: 'us_aea_en',
+                markers: data.metro.coords,
+                series: {
+                    markers: [{
+                        attribute: 'fill',
+                        scale: ['#FEE5D9', '#A50F15'],
+                        values: data.metro.unemployment,
+                        min: jvm.min(metroUnemplValues),
+                        max: jvm.max(metroUnemplValues)
+                    }, {
+                        attribute: 'r',
+                        scale: [5, 20],
+                        values: data.metro.population,
+                        min: jvm.min(metroPopValues),
+                        max: jvm.max(metroPopValues)
+                    }],
+                    regions: [{
+                        scale: ['#DEEBF7', '#08519C'],
+                        attribute: 'fill',
+                        values: data.states,
+                        min: jvm.min(statesValues),
+                        max: jvm.max(statesValues)
+                    }]
+                },
+                onMarkerLabelShow: function (event, label, index) {
+                    label.html(
+                      '<b>' + data.metro.names[index] + '</b><br/>' +
+                      'Population: ' + data.metro.population[index] + '<br/>' +
+                      'Unemployment rate: ' + data.metro.unemployment[index] + '%'
+                    );
+                },
+                onRegionLabelShow: function (event, label, code) {
+                    label.html(
+                      '<b>' + label.html() + '</b><br/>' +
+                      'Unemployment rate: ' + data.states[code] + '%'
+                    );
+                },
+                onRegionClick: function (element, code, region) {
+                    var message = ' Code: '
+                        + code.toUpperCase();
+                    alert(message);
+                },
+                onMarkerClick: function (e, code) {
+                    //To create a sample for ajax call
+                    $.ajax({ url: 'api/data', type: 'GET', async: false, dataType: 'json', data: { 'index': code } })
+                        .done(function (result) {
+                            var dialogDiv = $('<div id="MenuDialog">\
+                                              <p><b>Code:</b> '+ result.Codes + '  </p>\
+    <p><b>Name:</b> ' + result.Name + '  </p>\
+    <p><b>Latitude:</b> ' + result.Latitude + '  </p>\
+    <p><b>Longitude:</b> ' + result.Longitude + '  </p>\
+    <p><b>Population:</b> ' + result.Population + '  </p>\
+    <p><b>Unemployment:</b> ' + result.Unemployment + '%  </p>\
+        </div>');
+                            dialogDiv.dialog({
+                                modal: true,
+                                title: "Details",
+                                show: 'clip',
+                                hide: 'clip'
+                            });
+
+
+
+                        })
+                    .fail(function () { alert('problem to load data'); });
+                }
+
+            });
+            var mapObject = $('.map').vectorMap('get', 'mapObject');
+        })
+    </script>
+
+</body>
+</html>

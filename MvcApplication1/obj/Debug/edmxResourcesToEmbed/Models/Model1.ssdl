@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="dbModelStoreContainer">
+    <EntitySet Name="Metros" EntityType="dbModel.Store.Metros" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UnemploymentRate" EntityType="dbModel.Store.UnemploymentRate" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Metros">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Codes" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Latitude" Type="decimal" Nullable="false" Precision="9" Scale="6" />
+    <Property Name="Longitude" Type="decimal" Nullable="false" Precision="9" Scale="6" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Population" Type="int" Nullable="false" />
+    <Property Name="Unemployment" Type="decimal" Nullable="false" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="UnemploymentRate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="StateCode" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Rate" Type="decimal" Nullable="false" Precision="5" Scale="2" />
+  </EntityType>
+</Schema>

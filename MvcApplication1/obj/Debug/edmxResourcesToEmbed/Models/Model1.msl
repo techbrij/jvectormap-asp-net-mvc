@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="dbModelStoreContainer" CdmEntityContainer="dbEntities">
+    <EntitySetMapping Name="Metros">
+      <EntityTypeMapping TypeName="dbModel.Metro">
+        <MappingFragment StoreEntitySet="Metros">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Codes" ColumnName="Codes" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Population" ColumnName="Population" />
+          <ScalarProperty Name="Unemployment" ColumnName="Unemployment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnemploymentRates">
+      <EntityTypeMapping TypeName="dbModel.UnemploymentRate">
+        <MappingFragment StoreEntitySet="UnemploymentRate">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

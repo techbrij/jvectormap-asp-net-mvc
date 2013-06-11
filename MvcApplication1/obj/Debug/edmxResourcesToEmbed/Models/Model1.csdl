@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="dbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="dbEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Metros" EntityType="dbModel.Metro" />
+    <EntitySet Name="UnemploymentRates" EntityType="dbModel.UnemploymentRate" />
+  </EntityContainer>
+  <EntityType Name="Metro">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Codes" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Latitude" Type="Decimal" Nullable="false" Precision="9" Scale="6" />
+    <Property Name="Longitude" Type="Decimal" Nullable="false" Precision="9" Scale="6" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="Population" Type="Int32" Nullable="false" />
+    <Property Name="Unemployment" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+  </EntityType>
+  <EntityType Name="UnemploymentRate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="StateCode" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="Rate" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+  </EntityType>
+</Schema>
